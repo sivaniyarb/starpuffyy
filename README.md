@@ -315,8 +315,61 @@ int* plusOne(int* digits, int digitsSize, int* returnSize)
     
     for (int i = cf, j = 0; j < digitsSize; i++, j++)
         res[i] = digits[j];
+
+        char * addBinary(char * a, char * b){
+    int sizeA = strlen(a);
+    int sizeB = strlen(b);
+    int sizeOutput = (sizeA > sizeB ? sizeA : sizeB) + 1;
+    char * output = (char *)malloc(sizeOutput + 1);
+    int sum = 0;
+    
+    output[sizeOutput] = '\0';
+    
+    while(sizeA > 0 || sizeB > 0 || sum > 0) {
+        
+        if(sizeA > 0) {
+            sum += a[--sizeA] - '0';
+        }
+        if(sizeB > 0) {
+            sum += b[--sizeB] - '0';
+        }
+        output[--sizeOutput] = sum % 2 + '0';
+        sum /= 2;
+    }
+    return output + sizeOutput;   
+}
     
     *returnSize = digitsSize + cf;
     return res;
+}
+
+int mySqrt(int x) {
+  return sqrt(x);  
+}
+
+int climbStairs(int n) {
+    long long int prv1 = 1;
+    long long int prv2 = 1;
+
+    for (int i = 0; i < n; i++) {
+        long long int tmp = prv1;
+        prv1 = prv1 + prv2;
+        prv2 = tmp;
+    }
+
+    return (int)prv2;
+}
+
+struct ListNode* deleteDuplicates(struct ListNode* head){
+    struct ListNode* curr = head;
+
+    while(curr != NULL && curr->next != NULL){
+        if(curr->val == curr->next->val)
+            curr->next = curr->next->next;
+        else
+            curr = curr->next;
+    }
+
+    return head;
 }
 
