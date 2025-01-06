@@ -222,3 +222,63 @@ int removeElement(int* nums, int numsSize, int val) {
     return j;
 }
 
+
+
+int strStr(char* haystack, char* needle) {
+  int count = 0;
+  int ptr = 0;
+  int n_len = strlen(needle);
+  int h_len = strlen(haystack);
+  for(int i = 0; i < h_len; i++){
+    ptr = i;
+    for(int j = 0; j < n_len; j++){
+      if(haystack[i] == needle[j]){
+        count++;
+        i++;
+      }
+      else{
+        count = 0;
+      }
+    }
+    if(count == n_len){
+      return ptr;
+    }
+    count = 0;
+    i = ptr;
+  }
+  return -1;
+}
+
+
+
+int searchInsert(int* nums, int numsSize, int target) 
+{   
+    int counter = 0;
+    for(int i = 0; i < numsSize; i++)
+    {
+        if (nums[i] == target) return i;
+        if(nums[i] <= target)
+        {
+            counter++; //to count the index where we would put the target
+        }
+    }
+    return counter;
+}
+
+
+
+int lengthOfLastWord(char* s) {
+    int count=0;
+    while((*s)!='\0'){
+        if(((*s)==' ')&& ((*(s+1))!=' ')&&((*(s+1))!='\0'))
+         count=0;
+        else{
+         if(*s!=' ')
+         count++;
+        }
+        s++;
+    }
+    return count;
+    
+}
+
