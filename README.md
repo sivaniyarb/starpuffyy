@@ -373,3 +373,37 @@ struct ListNode* deleteDuplicates(struct ListNode* head){
     return head;
 }
 
+void merge(int* nums1, int nums1Size, int m, int* nums2, int nums2Size, int n) {
+    int p1=m-1;
+    int p2=n-1;
+    int p=m+n-1;
+    while(p1>=0 && p2>=0){
+        if(nums1[p1]>nums2[p2])
+            nums1[p--]=nums1[p1--];
+        else
+        nums1[p--]=nums2[p2--];
+    }
+    while(p2>=0)
+     nums1[p--]=nums2[p2--];
+}
+
+int i=0;
+int arr[101]={0};
+void inorder(struct TreeNode* s)
+{
+    if(s!=NULL)
+    {
+        inorder(s->left);
+        arr[i++]=s->val;
+        inorder(s->right);
+    }
+}
+int* inorderTraversal(struct TreeNode* root, int* returnSize){
+    inorder(root);
+    int* ans=malloc(i*sizeof(int));
+    for(int j=0;j<i;j++) ans[j]=arr[j];
+    *(returnSize)=i;
+    i=0;
+    return ans;
+}
+
