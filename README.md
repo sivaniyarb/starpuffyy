@@ -22,8 +22,6 @@ int* twoSum(int* nums, int numsSize, int target, int* returnSize) {
     return result;
 }
 
-
-
 bool isPalindrome(int x) {
 
      double rev=0, rem, orignal=x;
@@ -43,9 +41,6 @@ bool isPalindrome(int x) {
        return false;
     
 }
-
-
-
 
 int DecimalNumericalPlace(char roman_np_value)
     {
@@ -97,8 +92,6 @@ int romanToInt(char * s)
     return sum;
 }
 
-
-
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -126,8 +119,6 @@ char* longestCommonPrefix(char** strs, int strsSize) {
     return w; // Return the common prefix
 }
 
-
-
 bool isValid(char *s) {
 
     char *q=s;
@@ -142,8 +133,6 @@ bool isValid(char *s) {
     
     return q==s;
 }
-
-
 
 /**
  * Definition for singly-linked list.
@@ -191,8 +180,6 @@ struct ListNode* mergeTwoLists(struct ListNode* list1, struct ListNode* list2) {
     return head;
 }
 
-
-
 int removeDuplicates(int* nums, int numsSize) {
     if (numsSize == 0) return 0;
 
@@ -207,8 +194,6 @@ int removeDuplicates(int* nums, int numsSize) {
     return index;
 }
 
-
-
 int removeElement(int* nums, int numsSize, int val) {
     if(numsSize==0){
         return 0;
@@ -221,8 +206,6 @@ int removeElement(int* nums, int numsSize, int val) {
     }
     return j;
 }
-
-
 
 int strStr(char* haystack, char* needle) {
   int count = 0;
@@ -249,8 +232,6 @@ int strStr(char* haystack, char* needle) {
   return -1;
 }
 
-
-
 int searchInsert(int* nums, int numsSize, int target) 
 {   
     int counter = 0;
@@ -265,8 +246,6 @@ int searchInsert(int* nums, int numsSize, int target)
     return counter;
 }
 
-
-
 int lengthOfLastWord(char* s) {
     int count=0;
     while((*s)!='\0'){
@@ -280,5 +259,64 @@ int lengthOfLastWord(char* s) {
     }
     return count;
     
+}
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ */
+struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
+    struct ListNode* listHead = (struct ListNode*)malloc(sizeof(struct ListNode));
+    struct ListNode* listTail = listHead;
+    listTail->val = 0;
+
+    
+    while (true) {
+        int val = (l1 ? l1->val: 0) + (l2 ? l2->val: 0) + listTail->val;
+
+        listTail->val = val % 10;
+        
+        l1 = l1 ? l1->next : NULL;
+        l2 = l2 ? l2->next : NULL;
+        
+        if (l1 || l2 || val/10) {
+            listTail->next = (struct ListNode*)malloc(sizeof(struct ListNode));
+            listTail->next->val = val/10;
+            listTail = listTail->next;
+            
+        }
+        else {
+            listTail->next = NULL;
+            return listHead;
+        }
+    }
+}
+
+int* plusOne(int* digits, int digitsSize, int* returnSize)
+{
+    int *res = malloc(sizeof(int) * 100);
+    int cf = 1;
+    
+    for (int i = digitsSize - 1; i >= 0; i--) {
+        if (digits[i] + cf > 9) {
+            digits[i] = (digits[i] + cf) % 10;
+        } else {
+            digits[i] = digits[i] + cf;
+            cf = 0;
+            break;
+        }
+    }
+    
+    if (cf)
+        res[0] = 1;
+    
+    for (int i = cf, j = 0; j < digitsSize; i++, j++)
+        res[i] = digits[j];
+    
+    *returnSize = digitsSize + cf;
+    return res;
 }
 
