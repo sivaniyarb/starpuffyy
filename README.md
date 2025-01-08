@@ -419,7 +419,6 @@ bool isSameTree(struct TreeNode* p, struct TreeNode* q){
  * };
  */
 
-
 bool parallel_traverse(struct TreeNode* a, struct TreeNode* b)
 {
     if (a == NULL && b == NULL)
@@ -497,5 +496,29 @@ int minDepth(struct TreeNode* root){
     if(!root->right) return minDepth(root->left)+1;
     
     return minDepth(root->left) > minDepth(root->right) ? minDepth(root->right)+1 : minDepth(root->left)+1;
+}
+
+/* Definition for a binary tree node.                   */
+/* struct TreeNode {                                    */
+/*     int val;                                         */
+/*     struct TreeNode *left;                           */
+/*     struct TreeNode *right;                          */
+/* };                                                   */
+int depth(struct TreeNode *root);
+
+bool isBalanced(struct TreeNode *root) {
+    if (root == NULL)
+        return true;
+        
+    return isBalanced(root->left) && 
+           isBalanced(root->right) &&
+           !(abs(depth(root->left) - depth(root->right)) > 1);
+}
+
+int depth(struct TreeNode *root) {
+    if (root == NULL)
+        return 0;
+        
+    return fmax(depth(root->left), depth(root->right)) + 1;
 }
 
