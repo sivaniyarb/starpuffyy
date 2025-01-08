@@ -407,3 +407,95 @@ int* inorderTraversal(struct TreeNode* root, int* returnSize){
     return ans;
 }
 
+bool isSameTree(struct TreeNode* p, struct TreeNode* q){
+    return (p == NULL || q == NULL) ? p == NULL && q == NULL : p->val == q->val && isSameTree(p->left, q->left) && isSameTree(p->right, q->right);
+}
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     struct TreeNode *left;
+ *     struct TreeNode *right;
+ * };
+ */
+
+
+bool parallel_traverse(struct TreeNode* a, struct TreeNode* b)
+{
+    if (a == NULL && b == NULL)
+        return true;
+ 
+    if (a == NULL || b == NULL)
+        return false;
+
+    if (a->val != b->val)
+        return false;
+    
+    return parallel_traverse(a->left, b->right) && parallel_traverse(a->right, b->left);
+}
+
+bool isSymmetric(struct TreeNode* root)
+{
+    if (root == NULL)
+        return true;
+    return parallel_traverse(root->left, root->right);
+}
+
+int maxArea(int* arr, int N){
+    int max = 0, i = 0, j = N - 1;
+    while(j > i){
+        int test = arr[i];
+        if(test > arr[j]) test = arr[j];
+        test *= (j - i);
+        if(max < test) max = test;
+        if(arr[i] < arr[j]) i++ ;
+        else j--;
+    }
+    return max;
+}
+
+int maxDepth(struct TreeNode* root){
+    if (!root)
+        return 0;
+    int left_depth= maxDepth(root->left);
+    int right_depth= maxDepth(root->right);
+    if(left_depth > right_depth)
+        return left_depth +1;
+    else
+        return right_depth +1;
+    
+}
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     struct TreeNode *left;
+ *     struct TreeNode *right;
+ * };
+ */
+struct TreeNode* sortedArrayToBST(int* nums, int numsSize) {
+    struct TreeNode* t;
+    if (numsSize == 0) {
+        return 0;
+    }
+    int mid = numsSize / 2;
+    t = (struct TreeNode*)malloc(sizeof(struct TreeNode));
+    t->val = nums[mid];
+    t->left=sortedArrayToBST(nums,mid);
+    t->right=sortedArrayToBST(nums+mid+1,numsSize-mid-1);
+    return t;
+}
+
+int minDepth(struct TreeNode* root){
+    if (!root) return 0;
+    
+    if (!root->left && !root->right) return 1;
+    
+    if(!root->left) return minDepth(root->right)+1;
+    
+    if(!root->right) return minDepth(root->left)+1;
+    
+    return minDepth(root->left) > minDepth(root->right) ? minDepth(root->right)+1 : minDepth(root->left)+1;
+}
+
